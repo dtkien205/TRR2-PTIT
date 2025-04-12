@@ -47,14 +47,14 @@ void dfs(int u, int cnt)
 
 int main()
 {
-    freopen("CT.INP", "r", stdin);
-    freopen("CT.OUT", "w", stdout);
+    // freopen("CT.INP", "r", stdin);
+    // freopen("CT.OUT", "w", stdout);
 
     cin >> n >> start;
     for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= n; j++) {
             cin >> a[i][j];
-            if (a[i][j] && a[i][j] != 10000 && i != j)
+            if (a[i][j] > 0 && a[i][j] <= 50)
                 adj[i].push_back(j);
         }
     }
@@ -71,6 +71,5 @@ int main()
                 cout << y << ' ';
             cout << endl;
         }
-        cout << cycles.size();
     }
 }

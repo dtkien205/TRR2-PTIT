@@ -7,32 +7,10 @@ int t, n, u, a[105][105], deg[105];
 set<int> adj[105];
 bool visited[105];
 
-void dfs(int u)
-{
-    visited[u] = true;
-    for (int v : adj[u]) {
-        if (!visited[v])
-            dfs(v);
-    }
-}
-
-bool lien_thong()
-{
-    memset(visited, false, sizeof(visited));
-    int cnt = 0;
-    for (int i = 1; i <= n; i++) {
-        if (!visited[i]) {
-            cnt++;
-            dfs(i);
-        }
-    }
-    return cnt == 1;
-}
+// khong can check lien thong???
 
 int isEuler()
 {
-    if (!lien_thong())
-        return 0;
     int cnt = 0;
     for (int i = 1; i <= n; i++) {
         if (deg[i] % 2)
@@ -91,10 +69,8 @@ int main()
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= n; j++) {
                 cin >> a[i][j];
-                if (a[i][j] == 1) {
+                if (a[i][j] == 1)
                     adj[i].insert(j);
-                    deg[i]++;
-                }
             }
         }
         Euler(u);

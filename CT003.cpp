@@ -3,48 +3,28 @@ using namespace std;
 #define ll long long
 #define endl '\n'
 
-int t, n, m, u, a[105][105], degIn[105], degOut[105];
+int t, n, u, a[105][105], degIn[105], degOut[105];
 set<int> adj[105];
-vector<int> ADJ[105];
 bool visited[105];
 
-void dfs(int u, vector<int> graph[])
-{
-    visited[u] = true;
-    for (int v : graph[u]) {
-        if (!visited[v])
-            dfs(v, graph);
-    }
-}
-
-bool lien_thong_yeu()
-{
-    memset(visited, false, sizeof(visited));
-    int cnt = 0;
-    for (int i = 1; i <= n; i++) {
-        if (!visited[i]) {
-            cnt++;
-            dfs(i, ADJ);
-        }
-    }
-    return cnt == 1;
-}
+// khong can check lien thong yeu ??
 
 int isEuler()
 {
-    if (!lien_thong_yeu())
-        return 0;
-    int cnt = 0;
-    for (int i = 1; i <= n; i++) {
+    int cnt1 = 0, cnt2 = 0;
+    for (int i = 1; i <= n; ++i) {
+        if (abs(degIn[i] - degOut[i]) > 1)
+            ++cnt1;
         if (abs(degIn[i] - degOut[i]) == 1)
-            cnt++;
+            ++cnt2;
     }
-    if (!cnt)
-        return 1;
-    else if (cnt == 2)
+
+    if (cnt1)
+        return 0;
+    else if (cnt2 == 2)
         return 2;
     else
-        return 0;
+        return 1;
 }
 
 void Euler(int u)
@@ -59,6 +39,7 @@ void Euler(int u)
             int y = *adj[x].begin();
             st.push(y);
             adj[x].erase(y);
+            adj[y].erase(x);
         } else {
             st.pop();
             EC.push_back(x);
@@ -71,38 +52,41 @@ void Euler(int u)
 
 int main()
 {
-    freopen("CT.INP", "r", stdin);
-    freopen("CT.OUT", "w", stdout);
+    // freopen("CT.INP", "r", stdin);
+    // freopen("CT.OUT", "w", stdout);
 
     cin >> t >> n;
+
     if (t == 1) {
-        for (int i = 1; i <= n; i++) {
-            int k;
-            cin >> k;
-            degOut[i] = k;
-            for (int j = 1; j <= k; j++) {
-                int x;
-                cin >> x;
-                adj[i].insert(x);
-                ADJ[i].push_back(x);
-                ADJ[x].push_back(i);
+
+        for (int u = 1; u <= n; ++u) {
+            string str;
+            getline(cin >> ws, str);
+            stringstream ss(str);
+            string v;
+            ss >> v;
+            while (ss >> v) {
+                int x = stoi(v);
+                adj[u].insert(x);
                 degIn[x]++;
             }
         }
+
+        for (int i = 1; i <= n; ++i)
+            degOut[i] = adj[i].size();
+
         cout << isEuler() << endl;
+
     } else {
+
         cin >> u;
         for (int i = 1; i <= n; i++) {
             int k;
             cin >> k;
-            degOut[i] = k;
             for (int j = 1; j <= k; j++) {
                 int x;
                 cin >> x;
                 adj[i].insert(x);
-                ADJ[i].push_back(x);
-                ADJ[x].push_back(i);
-                degIn[x]++;
             }
         }
         Euler(u);
