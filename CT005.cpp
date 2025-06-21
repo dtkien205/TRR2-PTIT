@@ -49,11 +49,6 @@ int main()
 
     dfs(s, 1);
 
-    if (!res.size()) {
-        cout << 0 << endl;
-        return 0;
-    }
-
     cout << res.size() << endl;
     for (auto v : res) {
         for (auto x : v)

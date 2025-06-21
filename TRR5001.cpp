@@ -4,29 +4,23 @@ using namespace std;
 #define endl '\n'
 #define ii pair<int, int>
 
-int n, m, s, t, a[1005][1005], par[1005];
+int n, s, t, a[1005][1005], par[1005];
 vector<ii> adj[1005];
 
 int main()
 {
     cin.tie(0)->sync_with_stdio(0);
 
-    // freopen("DN.INP", "r", stdin);
-    // freopen("DN.OUT", "w", stdout);
+    freopen("DN.INP", "r", stdin);
+    freopen("DN.OUT", "w", stdout);
 
-    cin >> n >> m >> s >> t;
-    // for (int i = 1; i <= n; i++) {
-    //     for (int j = 1; j <= n; j++) {
-    //         cin >> a[i][j];
-    //         if (a[i][j] && a[i][j] <= 50)
-    //             adj[i].push_back({ j, a[i][j] });
-    //     }
-    // }
-    for (int i = 0; i < m; i++) {
-        int x, y, w;
-        cin >> x >> y >> w;
-        adj[x].push_back({ y, w });
-        adj[y].push_back({ x, w });
+    cin >> n >> s >> t;
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            cin >> a[i][j];
+            if (a[i][j] && a[i][j] <= 50)
+                adj[i].push_back({ j, a[i][j] });
+        }
     }
 
     vector<int> d(n + 1, 1e9);
@@ -58,7 +52,6 @@ int main()
             path.push_back(t);
             t = par[t];
         }
-        // path.push_back(s);
         reverse(path.begin(), path.end());
         for (int x : path)
             cout << x << ' ';

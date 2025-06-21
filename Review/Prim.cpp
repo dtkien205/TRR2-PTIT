@@ -3,62 +3,54 @@ using namespace std;
 #define ll long long
 #define endl '\n'
 
-struct edge {
-    int x, y, w;
-};
-
-int n, m, a[105][105], par[105], d[105];
+int n, s;
 vector<pair<int, int>> adj[105];
 bool used[105];
 
-void Prim(int u)
+void prim(int s)
 {
-    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> q;
-    vector<edge> MST;
-    int res = 0;
-    q.push({ 0, u });
+    vector<tuple<int, int, int>> MST;
+    int d = 0;
+    used[s] = true;
 
-    while (!q.empty()) {
-        auto [w, x] = q.top();
-        q.pop();
-        if (used[x])
-            continue;
-
-        res += w;
-        used[x] = true;
-
-        if (u != x)
-            MST.push_back({ x, par[x], w });
-
-        for (auto [y, w2] : adj[x]) {
-            if (!used[y] && w2 < d[y]) {
-                q.push({ w2, y });
-                d[y] = w2;
-                par[y] = x;
+    while (MST.size() < n - 1) {
+        int min_w = 1e9, u, v;
+        for (int i = 1; i <= n; i++) {
+            if (used[i]) {
+                for (auto [j, w] : adj[i]) {
+                    if (!used[j] && w < min_w)
+                        min_w = w, u = i, v = j;
+                }
             }
         }
+        d += min_w;
+        MST.push_back({ u, v, min_w });
+        used[v] = true;
     }
 
-    cout << res << endl;
+    if (MST.size() < n - 1) {
+        cout << 0 << endl;
+        return;
+    }
+
+    cout << d << endl;
     for (auto [x, y, w] : MST)
-        cout << x << ' ' << y << ' ' << w << endl;
+        cout << min(x, y) << ' ' << max(x, y) << ' ' << w << endl;
 }
 
 int main()
 {
-    cin.tie(0)->sync_with_stdio(0);
+    freopen("CK.INP", "r", stdin);
+    freopen("CK.OUT", "w", stdout);
 
-    cin >> n >> m;
-
-    for (int i = 0; i < m; i++) {
-        int x, y, w;
-        cin >> x >> y >> w;
-        adj[x].push_back({ y, w });
-        adj[y].push_back({ x, w });
+    cin >> n >> s;
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            int w;
+            cin >> w;
+            if (w > 0 && w <= 50)
+                adj[i].push_back({ j, w });
+        }
     }
-
-    for (int i = 1; i <= n; i++)
-        d[i] = 1e9;
-
-    Prim(4);
+    prim(s);
 }

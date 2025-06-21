@@ -3,42 +3,44 @@ using namespace std;
 #define ll long long
 #define endl '\n'
 
-int n, a[105][105];
-vector<int> adj[105], rev_adj[105], unDir[105];
-bool visited[105];
+int n;
+vector<int> adj[105];
+bool vs[105];
 
-void dfs(int u, vector<int> graph[])
+void dfs(int u, vector<int> g[])
 {
-    visited[u] = true;
-    for (int v : graph[u]) {
-        if (!visited[v])
-            dfs(v, graph);
+    vs[u] = true;
+    for (int v : g[u]) {
+        if (!vs[v])
+            dfs(v, g);
     }
 }
 
-bool lien_thong_manh()
+bool stronglyConnected()
 {
-    memset(visited, false, sizeof(visited));
-    dfs(1, adj);
     for (int i = 1; i <= n; i++) {
-        if (!visited[i])
-            return false;
-    }
-    memset(visited, false, sizeof(visited));
-    dfs(1, rev_adj);
-    for (int i = 1; i <= n; i++) {
-        if (!visited[i])
-            return false;
+        memset(vs, false, sizeof(vs));
+        dfs(i, adj);
+        for (int j = 1; j <= n; j++)
+            if (!vs[j])
+                return false;
     }
     return true;
 }
 
-bool lien_thong_yeu()
+bool weaklyConnected()
 {
-    memset(visited, false, sizeof(visited));
-    dfs(1, unDir);
+    vector<int> undir[105];
+    for (int u = 1; u <= n; u++) {
+        for (int v : adj[u]) {
+            undir[u].push_back(v);
+            undir[v].push_back(u);
+        }
+    }
+    memset(vs, false, sizeof(vs));
+    dfs(1, undir);
     for (int i = 1; i <= n; i++) {
-        if (!visited[i])
+        if (!vs[i])
             return false;
     }
     return true;
@@ -52,18 +54,15 @@ int main()
     cin >> n;
     for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= n; j++) {
-            cin >> a[i][j];
-            if (a[i][j] == 1) {
+            int w;
+            cin >> w;
+            if (w)
                 adj[i].push_back(j);
-                rev_adj[j].push_back(i);
-                unDir[i].push_back(j);
-                unDir[j].push_back(i);
-            }
         }
     }
-    if (lien_thong_manh())
+    if (stronglyConnected())
         cout << 1;
-    else if (lien_thong_yeu())
+    else if (weaklyConnected())
         cout << 2;
     else
         cout << 0;
