@@ -1,8 +1,3 @@
- DT001: bỏ đọc ghi file thì mới AC<br>
- TRR2002: chưa AC<br>
- TRR1007, TRR1008, TRR1009: sai test mẫu thứ 1 (input là danh sách kề không phải danh sách cạnh)<br>
- TRR1009: bỏ đọc ghi file mới AC<br>
- TRR1011: sai test mẫu t = 2<br><br><br><br>
 
 Tên bài:<br>
 CT001	Chu trình Euler 01<br>
@@ -47,3 +42,9 @@ TRR2030	2.30 Cạnh cầu<br>
 TRR3001	3.1 Chu trình Euler<br>
 TRR3004	3.4 Chu trình Euler<br>
 TRR3007	3.7 Chu trình Hamilton<br>
+TRR4001	4.1 Cây khung<br>
+TRR4004	4.4 Cây khung<br>
+TRR4007	4.7 Cây khung<br>
+TRR5001	5.1 Đường đi ngắn nhất<br>			
+TRR5007	5.7 Đường đi ngắn nhất <br>
+TRR5016	5.16 Đường đi ngắn nhất<br>

@@ -37,11 +37,7 @@ int main()
 {
     init();
     Floyd();
-    int q;
-    cin >> q;
-    while (q--) {
-        int l, r;
-        cin >> l >> r;
-        cout << a[l][r] << endl;
-    }
+    int l, r;
+    cin >> l >> r;
+    cout << a[l][r] << endl;
 }

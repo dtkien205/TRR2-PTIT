@@ -42,4 +42,5 @@ int main()
         adj[x].push_back({ y, w });
         adj[y].push_back({ x, w });
     }
+    dijkstra();
 }

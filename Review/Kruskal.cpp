@@ -7,6 +7,8 @@ struct edge {
     int x, y, w;
 };
 
+// Cây khung lớn nhất
+
 int n, m, a[105][105], sz[105], par[105];
 vector<edge> adj;
 
@@ -39,7 +41,12 @@ bool Union(int u, int v)
 
 bool cmp(edge a, edge b)
 {
-    return a.w < b.w;
+    if (a.w != b.w)
+        return a.w > b.w;
+    else if (a.x != b.x)
+        return a.x < b.x;
+    else
+        return a.y < b.y;
 }
 
 void Kruskal()
@@ -61,7 +68,7 @@ void Kruskal()
         cout << "Do thi khong lien thong\n";
     else {
         cout << res << endl;
-        for (auto [x, y, w] : adj)
+        for (auto [x, y, w] : MST)
             cout << x << ' ' << y << ' ' << w << endl;
     }
 }
@@ -70,14 +77,20 @@ int main()
 {
     cin.tie(0)->sync_with_stdio(0);
 
-    cin >> n;
+    cin >> n >> m;
 
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= n; j++) {
-            cin >> a[i][j];
-            if (i < j && a[i][j] && a[i][j] != 100)
-                adj.push_back({ i, j, a[i][j] });
-        }
+    // for (int i = 1; i <= n; i++) {
+    //     for (int j = 1; j <= n; j++) {
+    //         cin >> a[i][j];
+    //         if (i < j && a[i][j] && a[i][j] != 100)
+    //             adj.push_back({ i, j, a[i][j] });
+    //     }
+    // }
+
+    for (int i = 0; i < m; i++) {
+        int x, y, z;
+        cin >> x >> y >> z;
+        adj.push_back({ x, y, z });
     }
 
     init();
