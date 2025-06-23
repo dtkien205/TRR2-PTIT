@@ -5,6 +5,9 @@ int n, a[105][105], e[105][105];
 
 int main()
 {
+    freopen("DN.INP", "r", stdin);
+    freopen("DN.OUT", "w", stdout);
+    
     cin >> n;
     for (int i = 1; i <= n; ++i)
         for (int j = 1; j <= n; ++j) {
