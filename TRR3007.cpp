@@ -35,8 +35,8 @@ void dfs(int u, int cnt)
 
 int main()
 {
-    // freopen("CT.INP", "r", stdin);
-    // freopen("CT.OUT", "w", stdout);
+    freopen("CT.INP", "r", stdin);
+    freopen("CT.OUT", "w", stdout);
 
     cin >> n >> start;
     for (int i = 1; i <= n; i++) {

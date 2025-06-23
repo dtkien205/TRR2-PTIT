@@ -3,13 +3,8 @@ using namespace std;
 #define ll long long
 #define endl '\n'
 
-struct edge {
-    int x, y, w;
-};
-
-int n, s, t, a[105][105];
-int d[105], par[105];
-vector<edge> e;
+int n, s, t, par[105];
+vector<tuple<int, int, int>> e;
 
 int main()
 {
@@ -21,18 +16,17 @@ int main()
         for (int j = 1; j <= n; j++) {
             int w;
             cin >> w;
-            if (w != 10000 && i != j)
+            if (w && w <= 50)
                 e.push_back({ i, j, w });
         }
     }
 
-    fill(d + 1, d + n + 1, 1e9);
+    vector<int> d(n + 1, 1e9);
     d[s] = 0;
-    par[s] = -1;
 
     for (int i = 1; i <= n - 1; i++) {
         for (auto [u, v, w] : e) {
-            if (d[u] < 1e9 && d[v] > d[u] + w) {
+            if (d[v] > d[u] + w) {
                 d[v] = d[u] + w;
                 par[v] = u;
             }
@@ -40,7 +34,7 @@ int main()
     }
 
     for (auto [u, v, w] : e) {
-        if (d[u] < 1e9 && d[v] > d[u] + w) {
+        if (d[v] > d[u] + w) {
             cout << -1 << endl;
             return 0;
         }
@@ -52,12 +46,12 @@ int main()
     }
 
     vector<int> path;
-    for (int x = t; x != -1; x = par[x])
-        path.push_back(x);
-    reverse(path.begin(), path.end());
-
     cout << d[t] << endl;
-    for (auto x : path)
+    while (t != par[t]) {
+        path.push_back(t);
+        t = par[t];
+    }
+    reverse(path.begin(), path.end());
+    for (int x : path)
         cout << x << ' ';
-    cout << endl;
 }
